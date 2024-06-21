@@ -75,7 +75,7 @@
         }
         .container {
             background-color: white;
-            padding: 40px;
+            padding: 20px     40px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
@@ -90,19 +90,17 @@
         footer {
             text-align: center;
             padding: 20px 0;
-            margin-top: 20px;
+            margin-top: 40px;
             font-size: 14px;
             color: #7f8c8d;
         }
         footer a {
             color: #3498db;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: color 0.3s ease;
+            margin: 0 10px;
         }
         footer a:hover {
-            color: #2980b9;
+            text-decoration: underline;
         }
         .x-logo {
             width: 15px;
@@ -186,7 +184,9 @@
     <footer>
         <p>Created with ❤️ | Follow us on <a href="https://x.com/inevitablebio" target="https://x.com/inevitablebio"><svg class="x-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
-        </svg></a></p>
+        </svg></a>| 
+        <a href="privacy.html" target="privacy.html">Privacy Policy</a>
+    </p>
     </footer>
 
     <script>
@@ -247,6 +247,16 @@ const countSelector = document.getElementById('countSelector');
         });
 
         
+    </script>
+
+    <!-- Google Analytics to keep track of visits-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CLH7K784F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-8CLH7K784F');
     </script>
 </body>
 </html>
