@@ -228,6 +228,33 @@ const countSelector = document.getElementById('countSelector');
                 alert('Numbers copied to clipboard with "--sref " prefix!');
             });
         });
+
+        function incrementVisitCount() {
+            let visits;
+            
+            if (localStorage.getItem("visits") !== null) {
+                visits = parseInt(localStorage.getItem("visits"));
+                visits += 1;
+            } else {
+                visits = 1;
+            }
+            
+            localStorage.setItem("visits", visits);
+            
+            // Log the visit count to the console (for demonstration purposes)
+            console.log("Visit count: " + visits);
+        }
+
+        // Call the function when the page loads
+        incrementVisitCount();
+
+        // Function to get the current visit count
+        function getVisitCount() {
+            return localStorage.getItem("visits") || "0";
+        }
+
+        // You can call this function anytime you need to know the current count
+        console.log("Current visit count: " + getVisitCount());
     </script>
 </body>
 </html>
