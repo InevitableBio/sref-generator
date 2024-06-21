@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midjourney SREF Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        select, button {
+            font-size: 20px;
+            margin: 10px 0;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        select {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .description {
+            background-color: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #generateButton {
+            background-color: #2ecc71;
+        }
+        #generateButton:hover {
+            background-color: #27ae60;
+        }
+        #result {
+            margin-top: 30px;
+            font-size: 18px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            word-wrap: break-word;
+        }
+        #resultText{
+            margin-top: 50px;
+            font-size: 16px;
+            visibility: hidden;
+        }
+        #copyButton {
+            display: none;
+            margin-top: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #2980b9;
+        }
+        .x-logo {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            fill: black;
+        }
+        .radio-group {
+            margin: 20px 0;
+        }
+        .radio-group label {
+            margin-right: 15px;
+        }
+        .radio-option {
+            margin-bottom: 10px;
+        }
+        .radio-description {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-left: 23px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Midjourney SREF generator</h1>
+        <div class="description">
+            
+            Generate random SREFs to use on Midjourney with ease! Choose how many SREFs you need, select your preferred range, and let our tool do the rest. Midjourney styling has never been so easy.
+        </div>
+        <h4>How many SREFs do you wanna generate?</h4>
+        <select id="countSelector">
+            <option value="1">1 </option>
+            <option value="2">2 </option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <br>
+        <div class="radio-option">
+            <label>
+                <input type="radio" name="range" value="full" checked> Random numbers
+                <span class="radio-description">Generate numbers between 1 and 9999999</span>
+            </label>
+        </div>
+        <div class="radio-option">
+            <label>
+                <input type="radio" name="range" value="low"> Low numbers
+                <span class="radio-description">Generate numbers between 1 and 10000</span>
+            </label>
+        </div>
+        <div class="radio-option">
+            <label>
+                <input type="radio" name="range" value="high"> High numbers
+                <span class="radio-description">Generate numbers between 1000000 and 9999999</span>
+            </label>
+        </div>
+        <br>
+        <button id="generateButton">Generate SREFs</button>
+        <button id="copyButton">Copy to Clipboard</button>
+        <div id="resultText">Here are your sref numbers, enjoy!</div> 
+        <div id="result"></div>
+    </div>
+    <footer>
+        <p>Created with ❤️ | Follow us on <a href="https://x.com/inevitablebio" target="https://x.com/inevitablebio"><svg class="x-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+        </svg></a></p>
+    </footer>
+
+    <script>
+const countSelector = document.getElementById('countSelector');
+        const generateButton = document.getElementById('generateButton');
+        const copyButton = document.getElementById('copyButton');
+        const result = document.getElementById('result');
+        const rangeRadios = document.getElementsByName('range');
+        const resultText = document.getElementById('resultText');
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        generateButton.addEventListener('click', () => {
+            const count = parseInt(countSelector.value);
+            const numbers = [];
+            let min, max;
+
+            for (const radio of rangeRadios) {
+                if (radio.checked) {
+                    switch (radio.value) {
+                        case 'low':
+                            min = 1;
+                            max = 10000;
+                            break;
+                        case 'high':
+                            min = 1000000;
+                            max = 9999999;
+                            break;
+                        default:
+                            min = 1;
+                            max = 999999999;
+                    }
+                    break;
+                }
+            }
+
+            for (let i = 0; i < count; i++) {
+                numbers.push(getRandomInt(min, max));
+            }
+            result.textContent = numbers.join(' ');
+            copyButton.style.display = 'inline-block';
+            resultText.style.visibility = 'visible';
+        });
+
+        copyButton.addEventListener('click', () => {
+            const textToCopy = "--sref " + result.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Numbers copied to clipboard with "--sref " prefix!');
+            });
+        });
+    </script>
+</body>
+</html>
