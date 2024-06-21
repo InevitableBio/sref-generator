@@ -65,9 +65,9 @@
             word-wrap: break-word;
         }
         #resultText{
-            margin-top: 50px;
+            margin-top: 30px;
             font-size: 16px;
-            visibility: hidden;
+            visibility: unset;
         }
         #copyButton {
             display: none;
@@ -105,8 +105,8 @@
             color: #2980b9;
         }
         .x-logo {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             margin-left: 5px;
             fill: black;
         }
@@ -124,6 +124,16 @@
             color: #7f8c8d;
             margin-left: 23px;
             display: block;
+        }
+        #copyConfirmation {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e6ffe6;
+            color: #006400;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
         }
     </style>
 </head>
@@ -171,6 +181,7 @@
         <button id="copyButton">Copy to Clipboard</button>
         <div id="resultText">Here are your sref numbers, enjoy!</div> 
         <div id="result"></div>
+        <div id="copyConfirmation"></div>
     </div>
     <footer>
         <p>Created with ❤️ | Follow us on <a href="https://x.com/inevitablebio" target="https://x.com/inevitablebio"><svg class="x-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -225,36 +236,17 @@ const countSelector = document.getElementById('countSelector');
         copyButton.addEventListener('click', () => {
             const textToCopy = "--sref " + result.textContent;
             navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('Numbers copied to clipboard with "--sref " prefix!');
+                copyConfirmation.textContent = 'Numbers copied to clipboard with "--sref " prefix!';
+                copyConfirmation.style.display = 'block';
+                
+                // Hide the confirmation message after 3 seconds
+                setTimeout(() => {
+                    copyConfirmation.style.display = 'none';
+                }, 3000);
             });
         });
 
-        function incrementVisitCount() {
-            let visits;
-            
-            if (localStorage.getItem("visits") !== null) {
-                visits = parseInt(localStorage.getItem("visits"));
-                visits += 1;
-            } else {
-                visits = 1;
-            }
-            
-            localStorage.setItem("visits", visits);
-            
-            // Log the visit count to the console (for demonstration purposes)
-            console.log("Visit count: " + visits);
-        }
-
-        // Call the function when the page loads
-        incrementVisitCount();
-
-        // Function to get the current visit count
-        function getVisitCount() {
-            return localStorage.getItem("visits") || "0";
-        }
-
-        // You can call this function anytime you need to know the current count
-        console.log("Current visit count: " + getVisitCount());
+        
     </script>
 </body>
 </html>
