@@ -97,7 +97,7 @@
         footer a {
             color: #3498db;
             text-decoration: none;
-            margin: 0;
+            margin: 0 10px;
         }
         footer a:hover {
             text-decoration: underline;
@@ -132,6 +132,54 @@
             border-radius: 5px;
             font-size: 14px;
             text-align: center;
+        }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;  /* Reduced from 60px */
+            height: 24px; /* Reduced from 34px */
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px; /* Made fully round */
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; /* Reduced from 26px */
+            width: 18px;  /* Reduced from 26px */
+            left: 3px;    /* Adjusted from 4px */
+            bottom: 3px;  /* Adjusted from 4px */
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #2196F3;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px); /* Adjusted from 26px */
+        }
+        .toggle-label {
+            margin-left: 10px;
+            font-size: 14px; /* Reduced font size */
         }
     </style>
 </head>
@@ -174,6 +222,14 @@
                 <span class="radio-description">Generate numbers between 1000000 and 9999999</span>
             </label>
         </div>
+        
+        <div class="toggle-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="weightToggle">
+                <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Include weights</span>
+        </div>
         <br>
         <button id="generateButton">Generate SREFs</button>
         <button id="copyButton">Copy to Clipboard</button>
@@ -182,9 +238,10 @@
         <div id="copyConfirmation"></div>
     </div>
     <footer>
-        <p>Created with ❤️ | Follow us on <a href="https://x.com/inevitablebio" target="https://x.com/inevitablebio"><svg class="x-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <p>Created with ❤️ | Follow us on<a href="https://x.com/inevitablebio" target="https://x.com/inevitablebio"><svg class="x-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
-        </svg></a> | <a href="privacy.html" target="privacy.html">Privacy Policy</a>
+        </svg></a>| 
+        <a href="privacy.html" target="privacy.html">Privacy Policy</a>
     </p>
     </footer>
 
@@ -195,6 +252,7 @@ const countSelector = document.getElementById('countSelector');
         const result = document.getElementById('result');
         const rangeRadios = document.getElementsByName('range');
         const resultText = document.getElementById('resultText');
+        const weightToggle = document.getElementById('weightToggle');
 
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -225,7 +283,21 @@ const countSelector = document.getElementById('countSelector');
             }
 
             for (let i = 0; i < count; i++) {
-                numbers.push(getRandomInt(min, max));
+                let number = getRandomInt(min, max);
+                if (weightToggle.checked) {
+                    let weight = getRandomInt(1, 5);
+                    numbers.push(`${number}::${weight}`);
+                } else {
+                    numbers.push(number);
+                }
+
+                /* numbers.push(getRandomInt(min, max));
+                if (weightToggle.checked) {
+                    let weight = getRandomInt(1, 5);
+                    numbers.push(`${number}::${weight}`);
+                } else {
+                    numbers.push(number);
+                } */
             }
             result.textContent = numbers.join(' ');
             copyButton.style.display = 'inline-block';
